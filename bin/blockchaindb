@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Stop on errors
+set -e
+
+# Sanity check command line options
+usage() {
+  echo "Usage: $0 (create|destroy|reset|dump)"
+}
+
+if [ $# -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+# Parse argument.  $1 is the first argument
+case $1 in
+  "create")
+  sqlite3 var/blockchain.sqlite3 < sql/schema.sql;
+   ;;
+  "destroy")
+  rm -rf var/blockchain.sqlite3 ;
+    ;;
+  "reset")
+  rm -rf var/blockchain.sqlite3 ;
+  sqlite3 var/blockchain.sqlite3 < sql/schema.sql;
+    ;;
+  "dump")
+  sqlite3 -batch -line var/blockchain.sqlite3 'SELECT * FROM blocks';
+  sqlite3 -batch -line var/blockchain.sqlite3 'SELECT * FROM transactions';
+  ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

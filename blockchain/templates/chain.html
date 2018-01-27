@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Blockchain by Shibo Chen</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    </head>
+    <body>
+        <div class="header">
+            <h1>Blockchain Prototype Implemented by Shibo Chen</h1> 
+            <h2>(Backend language: Python. Original idea by 原味区块 using Node.js)</h2>
+        </div>
+        <form action="/blockchain/mine">
+            <input type="submit" value="Mine a block" />
+        </form>
+        <form action="/blockchain/transactions/new">
+            <input type="submit" value="Make a new transaction" />
+        </form>    
+        <form action="/blockchain/chain">
+            <input type="submit" value="View existing chain" />
+        </form> 
+        <br><br>
+
+        <h3>Current Blocks</h3>
+        <p>Current difficulty: {{difficulty}}</p>
+
+        {% for block in blocks %}
+        <p>Block info:</p>
+        <ul>
+            <li>ID: {{block.identity}}</li>
+            <li>Timestamp: {{block.timestamp}}</li>
+            <li>Proof: {{block.proof}}</li>
+            <li>Previous block hash: {{block.previous_block_hash}}</li>
+            <li>Transactions:</li>
+                {% for transaction in block.transactions%}
+                <p>[sender: {{transaction.sender}},  receiver: {{transaction.receiver}},  value: {{transaction.value}}]</p>
+                {% endfor %}
+        </ul>
+        <br>
+        {% endfor %}
+    </body>
+</html>

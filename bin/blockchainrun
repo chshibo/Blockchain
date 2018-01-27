@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export FLASK_DEBUG=False
+export FLASK_APP=blockchain
+export BLOCKCHAIN_SETTINGS=config.py
+./bin/blockchaindb reset
+flask run --host 0.0.0.0 --port 8000
